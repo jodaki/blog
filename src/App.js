@@ -1,8 +1,10 @@
 import React,  {useState}from 'react'
-import { Routes, Route, Link, Navigate } from "react-router-dom";
-import {Home, Login, GreatePage, Contact} from './Pages/indexPages'
+import { Routes, Route, Link } from "react-router-dom";
+import {Home, Login, GreatePage} from './Pages/indexPages'
 import {signOut} from 'firebase/auth'
 import {auth} from './firebase/firebaseConfig' 
+import ConectUs from './Pages/ConectUs';
+import MyMessage from './Pages/MyMessage';
 
 
 function App() {
@@ -22,16 +24,17 @@ function App() {
       alert('مشکلی پیش امده  ')
     });
   }
-  
-    setTimeout(() => {
-        if (IsAute) {
-          signOut(auth).then(() => {
-            localStorage.clear()
-            setIsAute(false)
-            Navigate('/')
-          })
-        }
-    }, 100000);
+    //set time for aouto exite//
+
+    // setTimeout(() => {
+    //     if (IsAute) {
+    //       signOut(auth).then(() => {
+    //         localStorage.clear()
+    //         setIsAute(false)
+    //         Navigate('/')
+    //       })
+    //     }
+    // }, 100000);
   
   
   return (
@@ -45,12 +48,19 @@ function App() {
           <Link to='/conectus'>
             <li>conectus</li>
           </Link>
+          <Link to='/mymessage'>
+            <li>mymessage</li>
+          </Link>
         </ul>
+      
       <Routes>
         <Route  path="/" element={<Home IsAute={IsAute} />}/>
         <Route exact path="/login" element={<Login setIsAuth={setIsAute}/>}/>
         <Route exact path='/greatepage' element={<GreatePage IsAute={IsAute}/>} />
-        <Route exact path='./Contact'  element={<Contact/>} />
+        <Route exact path='/ConectUs' element={<ConectUs/>} />
+        <Route exact path='/mymessage' element={<MyMessage/>} />
+  
+        
         </Routes>
     </div>
   );

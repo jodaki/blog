@@ -11,7 +11,7 @@ export default function Home({IsAuth}) {
   const GreateCollection = collection(db, 'posts')
 
 
-    
+    //conect to database
  
     useEffect(() => {
     const getPosts = async () => {
@@ -21,37 +21,33 @@ export default function Home({IsAuth}) {
       getPosts()
     }, [])
 
-
+    //delet forms
     const deletePost = async (id) => {
       const postDoc = doc(db, 'posts', id)
-      await  deleteDoc(postDoc).then(() => {
-        alert('دهن پست برای همیشه سروریس شد ')
-        renderIntoDocument()
-      })
+      await  deleteDoc(postDoc)
     }
-    
+
   return (
     <div>
         <h1 className='border-bottom pb-2' >Home</h1>
         {
           postlist.map((post) => {
             return <div className='container'>
-              <div class="card m-2">
-                <div class="card-body">
-                  <blockquote class="blockquote mb-0">
-                    {!IsAuth && post.acher.id === auth.currentUser.uid &&  (
-                      
+              <div className="card m-2">
+                <div className="card-body">
+                  <blockquote className="blockquote mb-0">
+                    {IsAuth && post.acher.id === auth.currentUser.uid && (
                       <button 
                         className='btn btn-sm float-end btn-light' 
                         onClick={() =>{(deletePost(post.id))}}>
                         Dellet
                       </button>)
                       
-                    }
+                    } 
                     <p>{post.title}</p>
-                    <footer class="blockquote-footer">{post.text}<cite title="Source Title">Source Title</cite>
-                    <div class="card-footer">
-                      <small class="fst-italic"><span className='text-bold'>Great post: </span>{post.acher.name}</small>
+                    <footer className="blockquote-footer">{post.text}<cite title="Source Title">Source Title</cite>
+                    <div className="card-footer">
+                      <small className="fst-italic"><span className='text-bold'>Great post: </span>{post.acher.name}</small>
                     </div>
                     </footer>
                   </blockquote>
